@@ -2,12 +2,17 @@
 
 ## Project setup
 ```
-yarn install
+yarn
 ```
 
-### Compiles and hot-reloads for development
+### Run client
 ```
 yarn serve
+```
+
+### Run server
+```
+yarn backend
 ```
 
 ### Compiles and minifies for production
@@ -22,3 +27,6 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Credit
+See [Vue JS Crash Course](https://www.youtube.com/watch?v=qZXt1Aom3Cs).
