@@ -1,10 +1,26 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div class="container">
+    <Header @toggle-add-task="toggleAddTask" title="Task Tracker" :showAddTask="showAddTask" />
+    <router-view :showAddTask="showAddTask"/>
+  </div>
 </template>
+
+<script>
+import Header from './components/Header.vue'
+
+export default {
+  name: 'App',
+  components: { Header },
+  data() {
+    return { showAddTask: false }
+  },
+  methods: {
+    toggleAddTask() {
+      this.showAddTask = !this.showAddTask
+    },
+  },
+}
+</script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');

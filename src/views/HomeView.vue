@@ -1,20 +1,17 @@
 <template>
-  <div class="container">
-    <Header title="Task tracker"/>
-    <AddTask @add-task="addTask" />
-    <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks" />
-  </div>
+  <AddTask v-show="showAddTask" @add-task="addTask" />
+  <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks" />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Header from '../components/Header.vue'
 import Tasks from '../components/Tasks.vue'
 import AddTask from '../components/AddTask.vue'
 
 export default defineComponent({
   name: 'HomeView',
-  components: { AddTask, Header, Tasks },
+  props: { showAddTask: Boolean },
+  components: { AddTask, Tasks },
   data() {
     return {
       tasks: [] as any[],
