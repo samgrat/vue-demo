@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Header title="Task tracker"/>
-    <AddTask />
+    <AddTask @add-task="addTask" />
     <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks" />
   </div>
 </template>
@@ -21,6 +21,19 @@ export default defineComponent({
     }
   },
   methods: {
+    async addTask(task: any) {
+      const res = await fetch('api/tasks', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(task),
+      })
+
+      const data = await res.json()
+
+      this.tasks = [...this.tasks, data]
+    },
     async deleteTask(id: Number) {
       if (confirm('Are you sure?')) {
         const res = await fetch(`api/tasks/${id}`, {
