@@ -10,6 +10,23 @@ import Header from '../components/Header.vue'
 
 export default defineComponent({
   name: 'HomeView',
-  components: { Header }
+  components: { Header },
+  data() {
+    return {
+      tasks: [],
+    }
+  },
+  methods: {
+    async fetchTasks() {
+        const res = await fetch('api/tasks')
+
+        const data = await res.json()
+
+        return data
+    },
+  },
+  async created() {
+    this.tasks = await this.fetchTasks()
+  },
 })
 </script>
