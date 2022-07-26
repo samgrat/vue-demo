@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Header title="Task tracker"/>
-    <Tasks @delete-task="deleteTask" :tasks="tasks" />
+    <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks" />
   </div>
 </template>
 
@@ -15,7 +15,7 @@ export default defineComponent({
   components: { Header, Tasks },
   data() {
     return {
-      tasks: [],
+      tasks: [] as any[],
     }
   },
   methods: {
@@ -30,12 +30,37 @@ export default defineComponent({
           : alert('Error deleting task')
       }
     },
+    async fetchTask(id: Number) {
+      const res = await fetch(`api/tasks/${id}`)
+
+      const data = await res.json()
+
+      return data
+    },
     async fetchTasks() {
         const res = await fetch('api/tasks')
 
         const data = await res.json()
 
         return data
+    },
+    async toggleReminder(id: Number) {
+      const taskToToggle = await this.fetchTask(id)
+      const updTask = { ...taskToToggle, reminder: !taskToToggle.reminder }
+
+      const res = await fetch(`api/tasks/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(updTask),
+      })
+
+      const data = await res.json()
+
+      this.tasks = this.tasks.map((task: any) =>
+        task.id === id ? { ...task, reminder: data.reminder } : task
+      )
     },
   },
   async created() {
