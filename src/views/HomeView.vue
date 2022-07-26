@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Header title="Task tracker"/>
-    <Tasks :tasks="tasks" />
+    <Tasks @delete-task="deleteTask" :tasks="tasks" />
   </div>
 </template>
 
@@ -19,6 +19,17 @@ export default defineComponent({
     }
   },
   methods: {
+    async deleteTask(id: Number) {
+      if (confirm('Are you sure?')) {
+        const res = await fetch(`api/tasks/${id}`, {
+          method: 'DELETE',
+        })
+
+        res.status === 200
+          ? (this.tasks = this.tasks.filter((task: any) => task.id !== id))
+          : alert('Error deleting task')
+      }
+    },
     async fetchTasks() {
         const res = await fetch('api/tasks')
 
