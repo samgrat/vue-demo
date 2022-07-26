@@ -2,15 +2,17 @@
   <div class="container">
     <Header @toggle-add-task="toggleAddTask" title="Task Tracker" :showAddTask="showAddTask" />
     <router-view :showAddTask="showAddTask"/>
+    <Footer />
   </div>
 </template>
 
 <script>
 import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
 
 export default {
   name: 'App',
-  components: { Header },
+  components: { Header, Footer },
   data() {
     return { showAddTask: false }
   },
